@@ -53,7 +53,6 @@ public class ProfileController {
         this.jwtUtil = jwtUtil;
     }
 
-    // Explicit mapping so Spring matches /profile/login here BEFORE the wildcard below
     @GetMapping("/profile/login")
     public String redirectToLogin() {
         return "redirect:/login";
@@ -83,7 +82,6 @@ public class ProfileController {
         model.addAttribute("history", history);
         model.addAttribute("isListener", user.getRole().name().equals("LISTENER"));
 
-        // Add currentUser and userRole for nav (same pattern as DashboardController)
         if (token != null && jwtUtil.validateToken(token)) {
             Claims claims = jwtUtil.extractClaims(token);
             Long loggedInUserId = claims.get("userId", Long.class);
